@@ -1,4 +1,7 @@
 from fastapi import FastAPI, Depends
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from lol.config import get_db
 from lol.config import engine
@@ -6,12 +9,17 @@ from lol import crud, model
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
+
 #create tables, call before running app 
 model.Base.metadata.create_all(bind=engine)
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def lol():
-    return "League of Legends Champions, go to /champions/"
+    return templates.TemplateResponse(
+        request=request, name="index.html"
+    )
 
 @app.get("/champions/")
 def read_data(db: Session = Depends(get_db)):
