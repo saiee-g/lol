@@ -22,7 +22,7 @@
     </form>
 
     <h1>Find a Champion</h1>
-    <form action="/champions/" method="get">
+    <form action="/champions/{name}" method="get">
         <label for="name">Champion Name:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -33,7 +33,7 @@
     </form>
 
     <h1>Delete a Champion</h1>
-    <form action="/champions/" method="delete">
+    <form action="/champions/delete/" method="delete">
         <label for="name">Champion Name:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -44,7 +44,7 @@
     </form>
 
     <h1>Update a Champion</h1>
-    <form action="/champions/" method="delete">
+    <form action="/champions/update/" method="delete">
         <label for="name">Champion Name:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 

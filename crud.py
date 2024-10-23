@@ -18,5 +18,12 @@ def get_champ_name(db:Session, name:str):
     return db.query(Champion).filter(func.lower(Champion.name)==name.lower()).first()
 
 def delete_champ(db:Session, name:str):
-    return db.query(Champion).delete().where(Champions.name == name)
+    champ_to_delete = db.query(Champion).filter(func.lower(Champion.name)==name.lower()).first()
+
+    if champ_to_delete:
+        db.delete(champ_to_delete)
+        db.commit()
+        return True
+    return False
+    
 
