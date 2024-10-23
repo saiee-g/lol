@@ -20,5 +20,38 @@
 
         <input type="submit" value="Create Champion">
     </form>
+
+    <h1>Find a Champion</h1>
+    <form action="/champions/" method="get">
+        <label for="name">Champion Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="resource">Resource:</label><br>
+        <input type="text" id="resource" name="resource" required><br><br>
+
+        <input type="submit" value="Find Champion">
+    </form>
+
+    <h1>Delete a Champion</h1>
+    <form action="/champions/" method="delete">
+        <label for="name">Champion Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="resource">Resource:</label><br>
+        <input type="text" id="resource" name="resource" required><br><br>
+
+        <input type="submit" value="Delete Champion">
+    </form>
+
+    <h1>Update a Champion</h1>
+    <form action="/champions/" method="delete">
+        <label for="name">Champion Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="resource">Resource:</label><br>
+        <input type="text" id="resource" name="resource" required><br><br>
+
+        <input type="submit" value="Update Champion">
+    </form>
 </body>
 </html>

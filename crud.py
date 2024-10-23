@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from lol.model import Champion
+from sqlalchemy import delete, func
 
 
 def get_champ(db:Session):
@@ -14,4 +15,8 @@ def create_champ(db: Session, name:str, resource:str):
     return db_champ
 
 def get_champ_name(db:Session, name:str):
-    return db.query(Champion).filter(Champion.name==name).first()
+    return db.query(Champion).filter(func.lower(Champion.name)==name.lower()).first()
+
+def delete_champ(db:Session, name:str):
+    return db.query(Champion).delete().where(Champions.name == name)
+
