@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -9,14 +9,14 @@ from lol import crud, model
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+#app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 #create tables, call before running app 
 model.Base.metadata.create_all(bind=engine)
 
 @app.get("/", response_class=HTMLResponse)
-def lol():
+async def lol(request: Request):
     return templates.TemplateResponse(
         request=request, name="index.html"
     )
