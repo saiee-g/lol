@@ -9,17 +9,21 @@ from lol import crud, model
 
 app = FastAPI()
 
-#app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="lol/static"), name="static")
+templates = Jinja2Templates(directory="lol/templates")
 
 #create tables, call before running app 
 model.Base.metadata.create_all(bind=engine)
 
 @app.get("/", response_class=HTMLResponse)
 async def lol(request: Request):
-    return templates.TemplateResponse(
-        request=request, name="index.html"
-    )
+    # return templates.TemplateResponse(
+    #     request=request, name="index.html"
+    # )
+    try:
+        return templates.TemplateResponse(request=request, name="index.html")
+    except Exception as error:
+        return HTMLResponse(content=str(error), status_code=500)
 
 @app.get("/champions/")
 def read_data(db: Session = Depends(get_db)):
