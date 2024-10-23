@@ -13,3 +13,5 @@ def create_champ(db: Session, name:str, resource:str):
     db.refresh(db_champ)
     return db_champ
 
+def get_champ_name(db:Session, name:str):
+    return db.query(Champion).filter(Champion.name==name).first()

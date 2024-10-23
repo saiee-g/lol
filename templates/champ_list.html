@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+    <title>Champions List</title>
+</head>
+<body>
+    <h1>Champion's List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Resource</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for champ in champions %}
+            <tr>
+                <td>{{ champ.name }}</td>
+                <td>{{ champ.resource }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">No champions found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

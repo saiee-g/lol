@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Depends, Request
+from fastapi import FastAPI, Depends, Request, Form
+from fastapi import HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -17,22 +18,28 @@ model.Base.metadata.create_all(bind=engine)
 
 @app.get("/", response_class=HTMLResponse)
 async def lol(request: Request):
-    # return templates.TemplateResponse(
-    #     request=request, name="index.html"
-    # )
-    try:
-        return templates.TemplateResponse(request=request, name="index.html")
-    except Exception as error:
-        return HTMLResponse(content=str(error), status_code=500)
+    return templates.TemplateResponse(
+        request=request, name="index.html"
+    )
+    # try:
+    #     return templates.TemplateResponse(request=request, name="index.html")
+    # except Exception as error:
+    #     return HTMLResponse(content=str(error), status_code=500)
 
-@app.get("/champions/")
-def read_data(db: Session = Depends(get_db)):
+@app.get("/champions/", response_class=HTMLResponse)
+def read_data(request: Request, db: Session = Depends(get_db)):
     #Depends creates unique session for each request to avoid conn leaks
     champions = crud.get_champ(db)
-    return champions
+    print(champions)
+    return templates.TemplateResponse(
+        "champ_list.html", {"request": request, "champions": champions}
+    )
 
 @app.post("/champions/")
-def create_champ(name:str, resource:str, db: Session = Depends(get_db)):
+def create_champ(request:Request, name:str = Form(...), resource:str = Form(...), db: Session = Depends(get_db)):
+    existing_champ = crud.get_champ_name(db, name)
+    if existing_champ:
+        raise HTTPException(status_code=400, detail="Champion already exists")
     db_champ = crud.create_champ(db, name, resource)
     return db_champ
 
