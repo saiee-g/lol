@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine # creates engine for db
 from sqlalchemy.orm import sessionmaker #creates sessions for each query request
 from sqlalchemy.ext.declarative import declarative_base #creates base class for all other models to inherit from
-
+from dotenv import load_dotenv
+import os
 #DATABASE_URL = "postgresql://user:password@localhost:5432/mydatabase"  #connection string, used to connect fastAPI with database
 #postgresql://-->postgresql/which database),
 #(user-->username of postgres),
@@ -10,7 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base #creates base class for 
 #(5432-->default port for postgres)
 #(mydatabase->db you want to conncet to)
 
-DATABASE_URL = "postgresql://postgres:Saiee%40123@localhost:5432/lol"
+DATABASE_URL = f"postgresql://{os.getenv('DB_USERNAME')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
 
 engine = create_engine(DATABASE_URL) #create engine for the specified db
 
